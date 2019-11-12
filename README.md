@@ -4,23 +4,14 @@ Generalnie to głównym failem była samoobsługa modelu - sam pobierał sobie w
 
 ## Skrypty do testu w konsoli
 
-CLI: `clear && php artisan tinker`
-
-Pojedyńczy obiekt:
+Pobieranie obiektów:
 ```php
-use App\Service\StarWars\SWApiMonoModel;
-$api = resolve('\App\Service\StarWars\SWApiService');
-$res = $api->resolve(new SWApiMonoModel('people', 1));   // SWApiMonoModel(kategoria, idObiektu)
+use App\Service\StarWars\Entities\People; // albo Films, Planets, Species, Starships, Vehicles
+$res = People::find(1);
+$res = People::all();
 ```
 
-Wiele obiektów:
-```php
-use App\Service\StarWars\SWApiMultiModel;
-$api = resolve('\App\Service\StarWars\SWApiService');
-$res = $api->resolve(new SWApiMultiModel('people'));    // SWApiMultiModel(kategoria)
-```
-
-Testowanie: 
+Wyświetlanie właściwości:
 ```php
 $name = $res->name;        //dla pojedyńczego obiektu
 $names = $res->map->names; //dla wielu obiektów

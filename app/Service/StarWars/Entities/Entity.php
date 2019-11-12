@@ -16,7 +16,7 @@ class Entity
         return Str::lower(\array_pop($parts));
     }
 
-    public static function find(int $id, string $entityType = '')
+    public static function find(int $id, string $entityType = null)
     {
         $type = $entityType ?? self::type();
         if (!\in_array($type, ['people', 'vehicles', 'planets', 'starships', 'species', 'films'])) {
@@ -26,7 +26,7 @@ class Entity
         return resolve(SWApiService::class)->resolve(new SWApiMonoModel($type, $id));
     }
 
-    public static function all(string $entityType = '')
+    public static function all(string $entityType = null)
     {
         $type = $entityType ?? self::type();
         if (!\in_array($type, ['people', 'vehicles', 'planets', 'starships', 'species', 'films'])) {
