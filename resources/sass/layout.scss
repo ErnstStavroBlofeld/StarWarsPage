@@ -1,0 +1,53 @@
+@import 'base';
+
+main {
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0px 0px 26px 8px rgba(0,0,0,0.75);
+    background-color: $background-color;
+    padding: 10px;
+
+    @media (max-width: 900px) {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 10px;
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        nav {
+            width: 100%;
+
+            a {
+                padding: 5px 10px;
+                display: inline-block;
+                text-align: center;
+                text-decoration: none;
+                transition: transform .2s;
+                border-radius: 10px;
+
+                p {
+                    margin: 0;
+                }
+
+                &.active {
+                    background-color: darken($background-color, 4%);
+                }
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                &:active {
+                    background-color: darken($background-color, 3%);
+                }
+            }
+        }
+    }
+}
