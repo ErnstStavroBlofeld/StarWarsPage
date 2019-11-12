@@ -28,7 +28,7 @@ $names = $res->map->names; //dla wielu obiektów
 $starshipNames = $res->starships->map->name;  //Nazwy statków które dana osoba może plilotować (pojedyńczy obiekt)
 ```
 
-## Główny problem
+## Problem renderowania
 
 Brak rekursywności w renderowaniu obiektów;
 Z powodu implementacji ciągłe pobieranie danych przy próbie odczytania listy
