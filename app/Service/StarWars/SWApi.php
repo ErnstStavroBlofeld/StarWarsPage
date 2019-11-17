@@ -2,32 +2,39 @@
 
 namespace App\Service\StarWars;
 
-use App\Service\ApiResolver;
 use GuzzleHttp\Client;
+use App\Service\Api;
+use App\Exceptions\ApiResponseException;
+use App\Exceptions\ApiConnectionException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
-use App\Exceptions\ApiConnectionException;
-use App\Exceptions\ApiResponseException;
-use App\Service\ApiModel;
 
-class SWApiResolver implements ApiResolver
+class SWApi implements Api
 {
     private $client;
+    
+    private $apiUrl;
 
-    private $model;
-
-    public function __construct(Client $client, ApiModel $model)
+    public function __construct()
     {
-        $this->client = $client;
-        $this->model = $model;
+        $this->apiUrl = env('SW_API_URL');
+        $this->client = new Client([
+            'method' => 'GET',
+            'base_uri' => $this->apiUrl,
+            'headers' => [
+                'accept' => 'application/json'
+            ],
+            'timeout' => 30,
+            'exceptions' => false,
+        ]);
     }
 
-    public function __toString()
+    public function urlObjectId(string $url)
     {
-        return $this->model->getInternalUrl();
+        return (int) Str::match('/\/(\d+)\/?$/', \parse_url($url, PHP_URL_PATH))[1];
     }
 
-    private function raw(string $url): string
+    public function get(string $url)
     {
         if (Cache::has($url)) {
             return Cache::get($url);
@@ -56,16 +63,8 @@ class SWApiResolver implements ApiResolver
         }
     }
 
-    public function resolve()
+    public function getJson(string $url)
     {
-        $data = collect();
-
-        foreach ($this->model as $index => $url) {
-            $parsed = $this->model->parse(collect(\json_decode($this->raw($url), true))->recursive());
-            $data->put($index, $parsed);
-        }
-
-        $data = ($data->count() == 1) ? $data->first() : $data;
-        return $this->model->build($data);
+        return \json_decode($this->get($url), true);
     }
 }
