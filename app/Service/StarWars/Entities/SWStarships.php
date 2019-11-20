@@ -4,6 +4,7 @@ namespace App\Service\StarWars\Entities;
 
 use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
+use App\Service\StarWars\SWHelper;
 use DateTime;
 
 class SWStarships extends SWEntity
@@ -47,5 +48,27 @@ class SWStarships extends SWEntity
     public function getTitle()
     {
         return $this->name;
+    }
+
+    public function getDisplayProperties()
+    {
+        return [
+            'Model'                      => $this->model,
+            'Manufacturer'               => $this->manufacturer,
+            'Cost (in credits)'          => $this->constInCredits,
+            'Length'                     => $this->length,
+            'Maximum atmosphering speed' => $this->maxAtmospheringSpeed,
+            'Crew'                       => $this->crew,
+            'Passengers'                 => $this->passengers,
+            'Cargo capacity'             => $this->cargoCapacity,
+            'Consumables'                => $this->consumables,
+            'Hyperdrive rating'          => $this->hyperdriveRating,
+            'MGLT'                       => $this->MGLT,
+            'Class'                      => $this->starshipClass,
+            'Pilots'                     => SWHelper::CreateMultipleLinkElements($this->pilots, 'people'),
+            'Films'                      => SWHelper::CreateMultipleLinkElements($this->films, 'films'),
+            'Created'                    => $this->created->format('Y-m-d H:i:s'),
+            'Last edited'                => $this->edited->format('Y-m-d H:i:s'),
+        ];
     }
 }

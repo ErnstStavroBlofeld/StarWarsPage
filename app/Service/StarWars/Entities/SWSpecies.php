@@ -4,6 +4,7 @@ namespace App\Service\StarWars\Entities;
 
 use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
+use App\Service\StarWars\SWHelper;
 use DateTime;
 
 class SWSpecies extends SWEntity
@@ -42,5 +43,22 @@ class SWSpecies extends SWEntity
     public function getTitle()
     {
         return $this->name;
+    }
+
+    public function getDisplayProperties()
+    {
+        return [
+            'Classification'   => $this->classification,
+            'Designation'      => $this->designation,
+            'Average height'   => $this->averageHeight,
+            'Skin colors'      => $this->skinColors,
+            'Hair colors'      => $this->hairColors,
+            'Eye colors'       => $this->eyeColors,
+            'Average lifespan' => $this->averageLifespan,
+            'People'           => SWHelper::CreateMultipleLinkElements($this->people, 'people'),
+            'Films'            => SWHelper::CreateMultipleLinkElements($this->films, 'films'),
+            'Created'          => $this->created->format('Y-m-d H:i:s'),
+            'Last edited'      => $this->edited->format('Y-m-d H:i:s'),
+        ];
     }
 }

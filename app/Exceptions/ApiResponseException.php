@@ -17,6 +17,7 @@ class ApiResponseException extends ApiException
         $this->code = $code;
         $this->mime = $mime;
         $this->content = $content;
-        parent::__construct($url);
+        $this->url = $url;
+        parent::__construct($url, 'Server returned status ' . $this->code . ' for request [' . $this->url . ']');
     }
 }

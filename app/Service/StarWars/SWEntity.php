@@ -9,7 +9,7 @@ use RuntimeException;
 
 abstract class SWEntity
 {
-    private static function category()
+    public static function category()
     {
         $category = Str::lower(Arr::last(Str::split('\\', \get_called_class())));
 
@@ -54,4 +54,6 @@ abstract class SWEntity
     protected static abstract function make(int $id, array $data);
 
     public abstract function getTitle();
+
+    public abstract function getDisplayProperties();
 }

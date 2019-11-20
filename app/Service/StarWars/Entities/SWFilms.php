@@ -4,6 +4,7 @@ namespace App\Service\StarWars\Entities;
 
 use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
+use App\Service\StarWars\SWHelper;
 use DateTime;
 
 class SWFilms extends SWEntity
@@ -42,5 +43,23 @@ class SWFilms extends SWEntity
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getDisplayProperties()
+    {
+        return [
+            'Episode' => $this->episodeId,
+            'Opening crawl' => $this->openingCrawl,
+            'Director' => $this->director,
+            'Producer' => $this->producer,
+            'Release date' => $this->releaseDate,
+            'Characters' => SWHelper::CreateMultipleLinkElements($this->characters, 'people'),
+            'Planets' => SWHelper::CreateMultipleLinkElements($this->planets, 'planets'),
+            'Starships' => SWHelper::CreateMultipleLinkElements($this->starships, 'starships'),
+            'Vehicles' => SWHelper::CreateMultipleLinkElements($this->vehicles, 'vehicles'),
+            'Species' => SWHelper::CreateMultipleLinkElements($this->species, 'species'),
+            'Created' => $this->created->format('Y-m-d H:i:s'),
+            'Last edited' => $this->edited->format('Y-m-d H:i:s'),
+        ];
     }
 }

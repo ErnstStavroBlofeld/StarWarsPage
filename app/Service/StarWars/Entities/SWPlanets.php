@@ -4,6 +4,7 @@ namespace App\Service\StarWars\Entities;
 
 use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
+use App\Service\StarWars\SWHelper;
 use DateTime;
 
 class SWPlanets extends SWEntity
@@ -42,5 +43,23 @@ class SWPlanets extends SWEntity
     public function getTitle()
     {
         return $this->name;
+    }
+
+    public function getDisplayProperties()
+    {
+        return [
+            'Rotation period' => $this->rotationPeriod,
+            'Orbital period'  => $this->orbitalPeriod,
+            'Diameter'        => $this->diameter,
+            'Climate'         => $this->climate,
+            'Gravity'         => $this->gravity,
+            'Terrain'         => $this->terrain,
+            'Surface water'   => $this->surfaceWater,
+            'Population'      => $this->population,
+            'Residents'       => SWHelper::CreateMultipleLinkElements($this->residents, 'people'),
+            'Films'           => SWHelper::CreateMultipleLinkElements($this->films, 'films'),
+            'Created'         => $this->created->format('Y-m-d H:i:s'),
+            'Last edited'     => $this->edited->format('Y-m-d H:i:s'),
+        ];
     }
 }

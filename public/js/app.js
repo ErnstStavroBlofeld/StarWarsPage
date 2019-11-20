@@ -19239,17 +19239,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.entites .entity').forEach(function (element) {
-    element.querySelector('.title').addEventListener('click', function (event) {
-      if (element.classList.contains('hidden')) {
-        element.classList.remove('hidden');
-      } else {
-        element.classList.add('hidden');
+  document.querySelectorAll('.entity label').forEach(function (element) {
+    var identifier = element.getAttribute('for');
+    var content = element.textContent;
+
+    if (identifier == null || content == null) {
+      console.error('Invalid entity label', element);
+    } else {
+      if (typeof window.localStorage[identifier] == 'undefined') {
+        console.info("Entity \"".concat(identifier, "\" has been cached with title \"").concat(content, "\""));
+        window.localStorage[identifier] = content;
       }
-    });
+    }
+  });
+  document.querySelectorAll('.entity a[data-identifier]').forEach(function (element) {
+    var identifier = element.getAttribute('data-identifier');
+
+    if (typeof window.localStorage[identifier] != 'undefined') {
+      element.textContent = window.localStorage[identifier];
+    } else {
+      var _identifier$split = identifier.split(':'),
+          _identifier$split2 = _slicedToArray(_identifier$split, 2),
+          category = _identifier$split2[0],
+          id = _identifier$split2[1];
+
+      element.classList.add('card');
+      element.innerHTML = "<p>".concat(category, "</p><p>").concat(id, "</p>");
+    }
   });
 });
 
