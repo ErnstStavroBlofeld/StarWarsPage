@@ -8,6 +8,6 @@ class ApiConnectionException extends ApiException
 {
     public function __construct(string $url)
     {
-        parent::__construct($url);
+        parent::__construct($url, 'Cannot connect to [' . $url . ']');
     }
 }

@@ -1,10 +1,12 @@
-<sw-entity>
-    @foreach($entity->properties as $property => $value)
-    <span data-key="{{ $property }}">
-        @foreach ((($value instanceof Illuminate\Support\Collection) ? $value : collect($value)) as $data)
-        <pre>{{ var_dump($data) }}</pre>
-        @endforeach
-    </span>
-    <br>
+<div class="entity">
+    <label hidden for="{{ $entity::category() . ':' . $entity->id }}">{{ $entity->getTitle() }}</label>
+    <a href="{{ url('/' . $entity::category() . '/' . $entity->id ) }}" class="title">{{ $entity->getTitle() }}</a>
+    @foreach ($entity->getDisplayProperties() as $name => $value)
+    @if($value != '')
+    <div class="property">
+        <div class="name">{{ $name }}</div>
+        <div class="value">{!! $value !!}</div>
+    </div>
+    @endif
     @endforeach
-</sw-entity>
+</div>

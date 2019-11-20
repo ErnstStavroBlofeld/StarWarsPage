@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Service\StarWars\SWApiService;
+use App\Service\StarWars\SWApi;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -29,18 +29,8 @@ class AppServiceProvider extends ServiceProvider
             return $parts;
         });
 
-        Collection::macro('recursive', function () {
-            return $this->map(function ($value) {
-                if (is_array($value) || is_object($value)) {
-                    return collect($value)->recursive();
-                }
-
-                return $value;
-            });
-        });
-
-        $this->app->singleton(SWApiService::class, function ($app) {
-            return new SWApiService();
+        $this->app->singleton(SWApi::class, function ($app) {
+            return new SWApi();
         });
     }
 

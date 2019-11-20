@@ -14,6 +14,9 @@
 Route::get('/', 'StarWars\HomeController@homeRoute');
 Route::get('/home', 'StarWars\HomeController@homeRoute');
 
-Route::get('/{category}/{id?}', 'StarWars\EntityController@entityRoute')
+Route::get('/{category}/{id}', 'StarWars\EntityController@entity')
     ->where('category', 'people|vehicles|planets|starships|species|films')
     ->where('id', '[0-9]+');
+
+Route::get('/{category}', 'StarWars\EntityController@entities')
+    ->where('category', 'people|vehicles|planets|starships|species|films');

@@ -4,12 +4,5 @@
 @endsection
 @section('content')
 <h1>{{ Str::ucfirst($category) }}</h1>
-@if ($data instanceof Illuminate\Support\Collection)
-    <sw-entity-list>
-    @each('templates.sw-entity', $data, 'entity')
-    </sw-entity-list>
-@else
-    @each('templates.sw-entity', [$data], 'entity')
-@endif
+@include('templates.sw-entity', ['entity' => $entity])
 @endsection
-
