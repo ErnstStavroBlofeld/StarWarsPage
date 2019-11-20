@@ -52,4 +52,6 @@ abstract class SWEntity
     } 
 
     protected static abstract function make(int $id, array $data);
+
+    public abstract function getTitle();
 }

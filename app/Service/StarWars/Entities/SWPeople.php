@@ -42,4 +42,9 @@ class SWPeople extends SWEntity
 
         return $instance;
     }
+
+    public function getTitle()
+    {
+        return $this->name;
+    }
 }

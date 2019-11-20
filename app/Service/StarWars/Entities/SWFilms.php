@@ -38,4 +38,9 @@ class SWFilms extends SWEntity
 
         return $instance;
     }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
 }

@@ -1,1 +1,32 @@
 @import 'layout';
+
+.entity {
+    .title {
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    &.hidden {
+        .property {
+            display: none;
+        }
+    }
+    
+    .property {
+        display: block;
+        overflow: auto;
+        border-bottom: #444444 dotted 2px;
+        padding: 2px;
+
+        .name {
+            width: 25%;
+            float: left;
+        }
+        
+        .value {
+            width: 75%;
+            float: left;
+            text-align: right;
+        }
+    }
+}

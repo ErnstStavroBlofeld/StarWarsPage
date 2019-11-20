@@ -43,4 +43,9 @@ class SWStarships extends SWEntity
 
         return $instance;
     }
+
+    public function getTitle()
+    {
+        return $this->name;
+    }
 }

@@ -38,4 +38,9 @@ class SWPlanets extends SWEntity
 
         return $instance;
     }
+
+    public function getTitle()
+    {
+        return $this->name;
+    }
 }

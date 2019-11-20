@@ -38,4 +38,9 @@ class SWSpecies extends SWEntity
 
         return $instance;
     }
+
+    public function getTitle()
+    {
+        return $this->name;
+    }
 }

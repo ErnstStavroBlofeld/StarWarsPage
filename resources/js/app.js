@@ -1,9 +1,14 @@
 import Axios from 'axios';
 import Lodash from 'lodash';
-import Vue from 'vue';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const app = new Vue({
-        el: '#app'
+    document.querySelectorAll('.entites .entity').forEach(element => {
+        element.querySelector('.title').addEventListener('click', event => {
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        });
     });
 });
