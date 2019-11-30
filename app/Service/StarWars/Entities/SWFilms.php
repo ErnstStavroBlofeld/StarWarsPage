@@ -48,18 +48,18 @@ class SWFilms extends SWEntity
     public function getDisplayProperties()
     {
         return [
-            'Episode' => $this->episodeId,
+            'Episode'       => $this->episodeId,
             'Opening crawl' => $this->openingCrawl,
-            'Director' => $this->director,
-            'Producer' => $this->producer,
-            'Release date' => $this->releaseDate,
-            'Characters' => SWHelper::CreateMultipleLinkElements($this->characters, 'people'),
-            'Planets' => SWHelper::CreateMultipleLinkElements($this->planets, 'planets'),
-            'Starships' => SWHelper::CreateMultipleLinkElements($this->starships, 'starships'),
-            'Vehicles' => SWHelper::CreateMultipleLinkElements($this->vehicles, 'vehicles'),
-            'Species' => SWHelper::CreateMultipleLinkElements($this->species, 'species'),
-            'Created' => $this->created->format('Y-m-d H:i:s'),
-            'Last edited' => $this->edited->format('Y-m-d H:i:s'),
+            'Director'      => $this->director,
+            'Producer'      => $this->producer,
+            'Release date'  => $this->releaseDate,
+            'Characters'    => SWHelper::CreateMultipleLinkElements($this->characters, 'people'),
+            'Planets'       => SWHelper::CreateMultipleLinkElements($this->planets, 'planets'),
+            'Starships'     => SWHelper::CreateMultipleLinkElements($this->starships, 'starships'),
+            'Vehicles'      => SWHelper::CreateMultipleLinkElements($this->vehicles, 'vehicles'),
+            'Species'       => SWHelper::CreateMultipleLinkElements($this->species, 'species'),
+            'Created'       => $this->created->format('Y-m-d H:i:s'),
+            'Last edited'   => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
 }

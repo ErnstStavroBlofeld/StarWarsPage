@@ -48,7 +48,6 @@ $(document).ready(() => {
                     hasPhrases = hasPhrases || hasPhrase;
                 });
 
-
                 hasPhrases = phrases.length != 0 ? hasPhrases : true;
                 hasPhrases ? $(element).removeClass('hidden') : $(element).addClass('hidden');
                 hasResults = hasResults || hasPhrases;
