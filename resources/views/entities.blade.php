@@ -3,7 +3,10 @@
 <link rel="stylesheet" href="{{ url('css/entities.css') }}">
 @endsection
 @section('content')
-<h1>{{ Str::ucfirst($category) }}</h1>
+<div class="top-bar">
+    <h1>{{ Str::ucfirst($category) }}</h1>
+    <input id="search" type="text" placeholder="Wyszukaj">
+</div>
 <div class="entites">
 @each('templates.sw-entity', $entities, 'entity')
 </div>

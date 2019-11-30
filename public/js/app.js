@@ -19239,6 +19239,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -19278,6 +19292,42 @@ document.addEventListener('DOMContentLoaded', function () {
       element.innerHTML = "<p>".concat(category, "</p><p>").concat(id, "</p>");
     }
   });
+  var searchInput = document.getElementById('search');
+
+  if (searchInput != null) {
+    searchInput.addEventListener('keyup', function (event) {
+      if (event.key.toLowerCase() == 'enter') {
+        event.preventDefault();
+
+        var searchPhrases = _construct(Array, _toConsumableArray(searchInput.value.split(/\s+/))).map(function (phrase) {
+          return phrase.toLowerCase();
+        }).filter(function (phrase) {
+          return phrase != '';
+        });
+
+        document.querySelectorAll('.entity').forEach(function (entity) {
+          entity.classList.remove('hidden');
+          var hasMatchingProperties = false;
+          entity.querySelectorAll('.property').forEach(function (property) {
+            var value = property.querySelector('.value').innerText;
+            searchPhrases.forEach(function (phrase) {
+              if (value.search(phrase) != -1) {
+                hasMatchingProperties = true;
+              }
+            });
+
+            if (searchPhrases.length == 0) {
+              hasMatchingProperties = true;
+            }
+          });
+
+          if (!hasMatchingProperties) {
+            entity.classList.add('hidden');
+          }
+        });
+      }
+    });
+  }
 });
 
 /***/ }),
@@ -19333,11 +19383,11 @@ document.addEventListener('DOMContentLoaded', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/home.scss */"./resources/sass/home.scss");
-__webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/entity.scss */"./resources/sass/entity.scss");
-__webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/entities.scss */"./resources/sass/entities.scss");
-module.exports = __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/404.scss */"./resources/sass/404.scss");
+__webpack_require__(/*! c:\Users\User\Desktop\Projekty\StarWarsPage\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! c:\Users\User\Desktop\Projekty\StarWarsPage\resources\sass\home.scss */"./resources/sass/home.scss");
+__webpack_require__(/*! c:\Users\User\Desktop\Projekty\StarWarsPage\resources\sass\entity.scss */"./resources/sass/entity.scss");
+__webpack_require__(/*! c:\Users\User\Desktop\Projekty\StarWarsPage\resources\sass\entities.scss */"./resources/sass/entities.scss");
+module.exports = __webpack_require__(/*! c:\Users\User\Desktop\Projekty\StarWarsPage\resources\sass\404.scss */"./resources/sass/404.scss");
 
 
 /***/ })

@@ -50,4 +50,41 @@ main {
             }
         }
     }
+
+    article {
+        .top-bar+* {
+            clear: both;
+        }
+
+        h1 {
+            float: left;
+            width: 50%;
+        }
+
+        #search {
+            color: $font-color;
+            float: right;
+            border: none;
+            background-color: transparent !important;
+            background-image: none !important;
+            font-size: 1.5em;
+            width: 50%;
+            text-align: right;
+
+            &:focus {
+                outline-width: 0;
+            }
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover, 
+            &:-webkit-autofill:focus, 
+            &:-webkit-autofill:active  {
+                -webkit-box-shadow: 0 0 0 30px $background-color inset !important;
+            }
+
+            &:-webkit-autofill {
+                -webkit-text-fill-color: $font-color !important;
+            }            
+        }
+    }
 }

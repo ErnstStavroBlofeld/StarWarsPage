@@ -27,4 +27,41 @@ document.addEventListener('DOMContentLoaded', () => {
             element.innerHTML = `<p>${category}</p><p>${id}</p>`;
         }
     });
+
+
+    let searchInput = document.getElementById('search');
+    if (searchInput != null) {
+        searchInput.addEventListener('keyup', event => {
+            if (event.key.toLowerCase() == 'enter') {
+                event.preventDefault();
+
+                const searchPhrases = new Array(...searchInput.value.split(/\s+/))
+                    .map(phrase => phrase.toLowerCase())
+                    .filter(phrase => phrase != '');
+                
+                document.querySelectorAll('.entity').forEach(entity => {
+                    entity.classList.remove('hidden');
+                    let hasMatchingProperties = false;
+
+                    entity.querySelectorAll('.property').forEach(property => {
+                        const value = property.querySelector('.value').innerText;
+
+                        searchPhrases.forEach(phrase => {
+                            if (value.search(phrase) != -1) {
+                                hasMatchingProperties = true;
+                            }
+                        });
+
+                        if (searchPhrases.length == 0) {
+                            hasMatchingProperties = true;
+                        }
+                    });
+
+                    if (!hasMatchingProperties) {
+                        entity.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    }
 });

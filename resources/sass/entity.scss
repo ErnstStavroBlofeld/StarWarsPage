@@ -10,6 +10,10 @@ article h1 {
         text-decoration: none;
     }
 
+    &.hidden {
+        display: none;
+    }
+
     .property {
         display: block;
         overflow: auto;

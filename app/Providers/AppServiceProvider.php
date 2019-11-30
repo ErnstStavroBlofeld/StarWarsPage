@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             return $parts;
         });
 
+        Str::macro('matches', function (string $regex, string $text) {
+            return \preg_match($regex, $text, $parts);
+        });
+
         $this->app->singleton(SWApi::class, function ($app) {
             return new SWApi();
         });

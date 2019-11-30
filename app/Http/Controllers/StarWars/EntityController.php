@@ -37,7 +37,7 @@ class EntityController extends Controller
             return view('entity', [
                 'category' => $category,
                 'entity' => $find($id)
-            ]);
+            ]); 
         } catch (ApiConnectionException $e) {
             \abort(500);
         } catch (ApiResponseException $e) {
