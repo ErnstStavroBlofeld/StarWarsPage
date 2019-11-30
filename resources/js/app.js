@@ -1,67 +1,60 @@
-import Axios from 'axios';
-import Lodash from 'lodash';
+import $ from 'jquery';
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.entity label').forEach(element => {
-        let identifier = element.getAttribute('for');
-        let content = element.textContent;
+$(document).ready(() => {
+    $('.entity label').each((index, element) => {
+        const target = $(element).prop('for');
+        const label = $(element).text();
 
-        if (identifier == null || content == null) {
-            console.error('Invalid entity label', element);
+        if (target == null || label == null) {
+            console.error('Invalid entity label', target, label);
         } else {
-            if (typeof window.localStorage[identifier] == 'undefined') {
-                console.info(`Entity "${identifier}" has been cached with title "${content}"`);
-                window.localStorage[identifier] = content;
+            if (window.localStorage.getItem(target) != label) {
+                console.info(`Entity ${target} label (${label}) has been cached`)
+                window.localStorage.setItem(target, label);
             }
         }
     });
 
-    document.querySelectorAll('.entity a[data-identifier]').forEach(element => {
-        let identifier = element.getAttribute('data-identifier');
-        
-        if (typeof window.localStorage[identifier] != 'undefined') {
-            element.textContent = window.localStorage[identifier];
+    $('.entity a[data-identifier]').each((index, element) => {
+        const identifier = $(element).attr('data-identifier');
+ 
+        if (window.localStorage.getItem(identifier) != null) {
+            element.textContent = window.localStorage.getItem(identifier);
         } else {
-            let [ category, id ] = identifier.split(':');
-            element.classList.add('card');
-            element.innerHTML = `<p>${category}</p><p>${id}</p>`;
+            const [ category, id ] = identifier.split(':');
+            $(element).addClass('card');
+            $(element).html(`<p>${category}</p><p>${id}</p>`);
         }
     });
 
+    $('#search').keyup(event => {
+        if (event.keyCode == 13) {
+            event.preventDefault();
 
-    let searchInput = document.getElementById('search');
-    if (searchInput != null) {
-        searchInput.addEventListener('keyup', event => {
-            if (event.key.toLowerCase() == 'enter') {
-                event.preventDefault();
+            const phrases = new Array(...event.target.value.split(/\s+/))
+                .map(phrase => phrase.toLowerCase())
+                .filter(phrase => phrase != '');
 
-                const searchPhrases = new Array(...searchInput.value.split(/\s+/))
-                    .map(phrase => phrase.toLowerCase())
-                    .filter(phrase => phrase != '');
-                
-                document.querySelectorAll('.entity').forEach(entity => {
-                    entity.classList.remove('hidden');
-                    let hasMatchingProperties = false;
+            let hasResults = false;
 
-                    entity.querySelectorAll('.property').forEach(property => {
-                        const value = property.querySelector('.value').innerText;
+            $('.entity').each((index, element) => {
+                let hasPhrases = false;
 
-                        searchPhrases.forEach(phrase => {
-                            if (value.search(phrase) != -1) {
-                                hasMatchingProperties = true;
-                            }
-                        });
-
-                        if (searchPhrases.length == 0) {
-                            hasMatchingProperties = true;
-                        }
-                    });
-
-                    if (!hasMatchingProperties) {
-                        entity.classList.add('hidden');
-                    }
+                $(element).children('.property').each((index, property) => {
+                    const text = $(property).children('.value').text().toLowerCase();
+                    const hasPhrase = phrases.reduce((previous, current) => (previous || text.search(current) != -1), false);
+                    
+                    hasPhrase ? $(property).addClass('highlight') : $(property).removeClass('highlight');
+                    hasPhrases = hasPhrases || hasPhrase;
                 });
-            }
-        });
-    }
+
+
+                hasPhrases = phrases.length != 0 ? hasPhrases : true;
+                hasPhrases ? $(element).removeClass('hidden') : $(element).addClass('hidden');
+                hasResults = hasResults || hasPhrases;
+            });
+
+            hasResults ? $('.no-results').addClass('hidden') : $('.no-results').removeClass('hidden');
+        }
+    });
 });

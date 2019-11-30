@@ -10,5 +10,9 @@
 <div class="entites">
 @each('templates.sw-entity', $entities, 'entity')
 </div>
+<div class="no-results hidden">
+<h2>No results</h2>
+<h3>:c</h3>
+</div>
 @endsection
 
