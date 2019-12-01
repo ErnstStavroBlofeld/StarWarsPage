@@ -1,0 +1,29 @@
+@import "../base.scss";
+@import "../templates/entity-card-link.scss";
+
+.entity-card {
+    label {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+
+        tr {
+            border-bottom: 2px dotted lighten($background-color, 15%);
+
+            td:nth-child(2n + 1) {
+                min-width: 100px;
+            }
+
+            td {
+                border-bottom: 2px dotted lighten($background-color, 15%);
+                padding: 3px 0;
+
+                &:nth-child(2n) {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

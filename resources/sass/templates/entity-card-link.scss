@@ -1,0 +1,20 @@
+a[data-entity-identifier].badge {
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: darken($background-color, 3%);
+    border-radius: 10px;
+    padding: 5px;
+    font-size: .5em;
+    display: inline-block;
+    text-align: center;
+
+    p {
+        display: block;
+        margin: 0;
+    }
+
+    i {
+        font-size: 1.8em;
+        font-style: normal;
+    }
+}

@@ -6,8 +6,10 @@ class SWHelper
 {
     public static function CreateLinkElement(int $id, string $category)
     {
-        return '<a data-identifier="'. $category . ':' . $id . 
-            '" href="' . url('/' . $category . '/' . $id) . '">' . $category . ':' . $id . '</a>';
+        return view('templates.entity-card-link', [
+            'id' => $id,
+            'category' => $category
+        ]);
     }
 
     public static function CreateMultipleLinkElements(array $value, string $category)

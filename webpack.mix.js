@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const MixGlob = require('laravel-mix-glob');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +12,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js');
+const mixGlob = new MixGlob({mix});
 
-mix.sass('resources/sass/home.scss', 'public/css');
-mix.sass('resources/sass/entity.scss', 'public/css');
-mix.sass('resources/sass/entities.scss', 'public/css');
-mix.sass('resources/sass/404.scss', 'public/css');
+mixGlob.sass('resources/sass/**/*.compile.scss', 'public/css/', null, { base: 'resources/sass/' })
+    .js('resources/js/**/*.compile.{js,jsm}', 'public/js/', null, { base: 'resources/js/' });
+
+
+mix.copyDirectory('resources/img/', 'public/img/');

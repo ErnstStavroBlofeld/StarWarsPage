@@ -1,29 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', App::getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="{{ url('js/app.js') }}"></script>
+    <meta name="theme-color" content="#222">
+    <link rel="icon" href="{{ url('img/planets.svg') }}">
     @yield('head')
-
-    <title>StarWars - @yield('title', 'Home Page')</title>
+    <title>StarWars - @yield('title')</title>
 </head>
 <body>
     <main id="app">
         <header>
-            <h1>StarWars - @yield('title', 'Home Page')</h1>
-            <nav>
-                @foreach(['home', 'people', 'vehicles', 'planets', 'starships', 'species', 'films'] as $type)
-                <a href="{{ url('/' . $type) }}" class="{{ $type == ($category ?? 'none') ? 'active' : 'inactive' }}">
-                    <img src="{{ url('img/' . $type . '-icon.png') }}" alt="Icon">
-                    <p>{{ Str::ucfirst($type) }}</p>
+            <h1>StarWars</h1>
+            @if(isset($navigation))
+            <nav class="route-buttons">
+                @foreach ($navigation as $route)
+                <a href="{{ url('/' . $route) }}" {{ $route == $location ? 'current' : '' }}>
+                    <img src="{{ url('img/' . $route . '.svg') }}" alt="Icon">
+                    <p>{{ Str::ucfirst($route) }}</p>
                 </a>
                 @endforeach
             </nav>
+            @endif
         </header>
         <article>
-            @yield('content')
+            <h1>@yield('title')</h1>
+            <div class="content">
+                @yield('content')
+            </div>
         </article>
     </main>
 </body>

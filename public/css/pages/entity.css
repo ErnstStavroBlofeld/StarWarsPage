@@ -1,0 +1,209 @@
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,500&display=swap);body {
+  margin: 0;
+  padding: 0;
+  font-family: "Work Sans", sans-serif;
+  color: #fff;
+  background-color: #272727;
+  font-size: 18px;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+main {
+  width: 80%;
+  margin: 20px auto;
+  box-shadow: 0px 0px 26px 8px rgba(0, 0, 0, 0.75);
+  background-color: #222;
+  padding: 10px;
+}
+
+@media (max-width: 900px) {
+  main {
+    width: 100%;
+    margin: 20px 0;
+  }
+}
+
+main header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+main header h1 {
+  font-size: 2.5em;
+  margin-bottom: 5px;
+}
+
+main header nav {
+  width: 100%;
+}
+
+main header nav a {
+  padding: 5px 10px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+  border-radius: 10px;
+}
+
+main header nav a img {
+  height: 64px;
+  width: 64px;
+}
+
+main header nav a p {
+  margin: 0;
+}
+
+main header nav a[current] {
+  background-color: #181818;
+}
+
+main header nav a:hover {
+  -webkit-transform: translateY(-5px);
+          transform: translateY(-5px);
+}
+
+main header nav a:active {
+  background-color: #1a1a1a;
+}
+
+main article {
+  overflow: hidden;
+}
+
+main article > h1 {
+  border-bottom: 2px dashed #555555;
+  padding-bottom: 3px;
+}
+
+main article .content {
+  font-size: 0.9em;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Work Sans", sans-serif;
+  color: #fff;
+  background-color: #272727;
+  font-size: 18px;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+a[data-entity-identifier].badge {
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 0.5em;
+  display: inline-block;
+  text-align: center;
+}
+
+a[data-entity-identifier].badge p {
+  display: block;
+  margin: 0;
+}
+
+a[data-entity-identifier].badge i {
+  font-size: 1.8em;
+  font-style: normal;
+}
+
+.entity-card label {
+  display: none;
+}
+
+.entity-card table {
+  width: 100%;
+}
+
+.entity-card table tr {
+  border-bottom: 2px dotted #484848;
+}
+
+.entity-card table tr td:nth-child(2n+1) {
+  min-width: 100px;
+}
+
+.entity-card table tr td {
+  border-bottom: 2px dotted #484848;
+  padding: 3px 0;
+}
+
+.entity-card table tr td:nth-child(2n) {
+  text-align: right;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+

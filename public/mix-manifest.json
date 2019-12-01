@@ -1,7 +1,9 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/home.css": "/css/home.css",
-    "/css/entity.css": "/css/entity.css",
-    "/css/entities.css": "/css/entities.css",
-    "/css/404.css": "/css/404.css"
+    "/js/pages/entities.js": "/js/pages/entities.js",
+    "/css/errors/404.css": "/css/errors/404.css",
+    "/css/pages/entities.css": "/css/pages/entities.css",
+    "/css/pages/entity.css": "/css/pages/entity.css",
+    "/css/pages/home.css": "/css/pages/home.css",
+    "/css/pages/query.css": "/css/pages/query.css",
+    "/js/pages/entity.js": "/js/pages/entity.js"
 }

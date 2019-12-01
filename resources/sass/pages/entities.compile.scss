@@ -1,0 +1,10 @@
+@import '../layout';
+@import '../templates/entity-card.scss';
+
+.entity-card {
+    width: 95%;
+    margin: 20px auto;
+    padding: 5px 10px 10px 10px;
+    border-radius: 20px;
+    background-color: darken($background-color, 1.5%);
+}

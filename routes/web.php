@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', 'StarWars\HomeController@homeRoute');
-Route::get('/home', 'StarWars\HomeController@homeRoute');
+Route::redirect('/', '/home');
 
-Route::get('/{category}/{id}', 'StarWars\EntityController@entity')
-    ->where('category', 'people|vehicles|planets|starships|species|films')
-    ->where('id', '[0-9]+');
+Route::get('/home', 'StarWarsController@homeRequest');
+Route::get('/query', 'StarWarsController@queryRequest');
 
-Route::get('/{category}', 'StarWars\EntityController@entities')
+Route::get('/{category}', 'StarWarsController@entitiesRequest')
+    ->where('category', 'people|vehicles|planets|starships|species|films');
+
+Route::get('/{category}/{id}', 'StarWarsController@entityRequest')
     ->where('category', 'people|vehicles|planets|starships|species|films');

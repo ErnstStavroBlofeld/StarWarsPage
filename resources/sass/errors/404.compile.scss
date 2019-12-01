@@ -1,0 +1,34 @@
+@import '../layout';
+
+@keyframes bumps {
+    0%, 100% {
+        transform: translate(-150px, +40px);
+    }
+
+    50% {
+        transform: translate(-150px, +30px);
+    }
+}
+
+article {
+    text-align: center;
+    font-size: 1.3em;
+
+    .file-search {
+        padding: 50px 0 100px 0;
+
+        .file {
+            width: 200px;
+        }
+
+        .search {
+            width: 250px;
+            position: absolute;
+            animation: bumps 1s infinite ease-in-out;
+        }
+    }
+
+    h2 {
+        font-size: 3em;
+    }
+}
