@@ -61,4 +61,23 @@ class SWSpecies extends SWEntity
             'Last edited'      => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
+
+    public function getArrayProperties()
+    {
+        return [
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'classification'   => $this->classification,
+            'designation'      => $this->designation,
+            'average_height'   => $this->averageHeight,
+            'skin_colors'      => $this->skinColors,
+            'hair_colors'      => $this->hairColors,
+            'Eye_colors'       => $this->eyeColors,
+            'average_lifespan' => $this->averageLifespan,
+            'people'           => $this->people,
+            'films'            => $this->films, 
+            'created'          => $this->created->format('Y-m-d H:i:s'),
+            'last_edited'      => $this->edited->format('Y-m-d H:i:s'),
+        ];
+    }
 }

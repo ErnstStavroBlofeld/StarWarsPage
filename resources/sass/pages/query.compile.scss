@@ -1,1 +1,35 @@
 @import '../layout';
+
+#query-input {
+    border: 0;
+    outline-width: 0;
+    margin: 5px 0;
+    padding: 5px;
+    width: 100%;
+    color: $font-color;
+    font-family: 'SF-Mono', monospace;
+    font-size: 1em;
+    background-color: darken($background-color, 3%);
+    background-image: transparent;
+}
+
+#query-output {
+    width: 100%;
+    text-align: center;
+
+    tr {
+        &:nth-child(1) {
+            background-color: darken($background-color, 5%) !important;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        &:nth-child(2n + 1) {
+            background-color: darken($background-color, 3%);
+        }
+
+        td {
+            padding: 4px;
+        }
+    }
+}
