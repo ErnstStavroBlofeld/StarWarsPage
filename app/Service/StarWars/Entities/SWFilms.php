@@ -62,4 +62,24 @@ class SWFilms extends SWEntity
             'Last edited'   => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
+
+    public function getArrayProperties()
+    {
+        return [
+            'id'            => $this->id,
+            'title'         => $this->title,
+            'episode'       => $this->episodeId,
+            'opening_crawl' => $this->openingCrawl,
+            'director'      => $this->director,
+            'producer'      => $this->producer,
+            'release_date'  => $this->releaseDate,
+            'characters'    => $this->characters,
+            'planets'       => $this->planets,
+            'starships'     => $this->starships, 
+            'vehicles'      => $this->vehicles,
+            'species'       => $this->species, 
+            'created'       => $this->created->format('Y-m-d H:i:s'),
+            'last_edited'   => $this->edited->format('Y-m-d H:i:s'),
+        ];
+    }
 }

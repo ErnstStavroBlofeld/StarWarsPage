@@ -62,4 +62,24 @@ class SWPlanets extends SWEntity
             'Last edited'     => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
+
+    public function getArrayProperties()
+    {
+        return [
+            'id'              => $this->id,
+            'name'            => $this->name,
+            'rotation_period' => $this->rotationPeriod,
+            'orbital_period'  => $this->orbitalPeriod,
+            'diameter'        => $this->diameter,
+            'climate'         => $this->climate,
+            'gravity'         => $this->gravity,
+            'terrain'         => $this->terrain,
+            'surface_water'   => $this->surfaceWater,
+            'population'      => $this->population,
+            'residents'       => $this->residents,
+            'films'           => $this->films, 
+            'created'         => $this->created->format('Y-m-d H:i:s'),
+            'last_edited'     => $this->edited->format('Y-m-d H:i:s'),
+        ];
+    }
 }

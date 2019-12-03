@@ -69,4 +69,26 @@ class SWPeople extends SWEntity
             'Last edited' => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
+
+    public function getArrayProperties()
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'height'      => $this->height,
+            'mass'        => $this->mass,
+            'hair_color'  => $this->hairColor,
+            'skin_color'  => $this->skinColor,
+            'eye_color'   => $this->eyeColor,
+            'birth_year'  => $this->birthYear,
+            'gender'      => $this->gender,
+            'homeworld'   => $this->homeworld,
+            'films'       => $this->films,
+            'species'     => $this->species, 
+            'vehicles'    => $this->vehicles,
+            'starships'   => $this->starships,
+            'created'     => $this->created->format('Y-m-d H:i:s'),
+            'last_edited' => $this->edited->format('Y-m-d H:i:s'),
+        ];
+    }
 }

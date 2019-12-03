@@ -85,4 +85,22 @@ class StarWarsController extends Controller
             'entities' => $entities
         ]);
     }
+
+    public function queryDataRequest(Request $request)
+    {
+        try {
+            $allCategories = [];
+
+            foreach ($this->dataCategories as $category => $class) {
+                $all = Closure::fromCallable([ $class, 'all' ]);
+                $allCategories[$category] = \array_map(function ($entity) {
+                    return $entity->getArrayProperties();
+                }, $all());
+            }
+        } catch (\Exception $e) {
+            \abort(500, [ 'error' => 'Internal error', 'code' => 500 ]);
+        }
+
+        return $allCategories;
+    }
 }

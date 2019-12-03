@@ -71,4 +71,28 @@ class SWStarships extends SWEntity
             'Last edited'                => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
+
+    public function getArrayProperties()
+    {
+        return [
+            'id'                         => $this->id,
+            'name'                       => $this->name,
+            'model'                      => $this->model,
+            'manufacturer'               => $this->manufacturer,
+            'cost_in_credits_'           => $this->constInCredits,
+            'length'                     => $this->length,
+            'maximum_atmosphering_speed' => $this->maxAtmospheringSpeed,
+            'crew'                       => $this->crew,
+            'passengers'                 => $this->passengers,
+            'cargo_capacity'             => $this->cargoCapacity,
+            'consumables'                => $this->consumables,
+            'hyperdrive_rating'          => $this->hyperdriveRating,
+            'MGLT'                       => $this->MGLT,
+            'class'                      => $this->starshipClass,
+            'pilots'                     => $this->pilots,
+            'films'                      => $this->films,
+            'created'                    => $this->created->format('Y-m-d H:i:s'),
+            'last_edited'                => $this->edited->format('Y-m-d H:i:s'),
+        ];
+    }
 }

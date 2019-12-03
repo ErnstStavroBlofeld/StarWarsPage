@@ -49,11 +49,13 @@ abstract class SWEntity
         } while (isset($page['next']) && $page['next'] != null);
 
         return $entities;
-    } 
+    }
 
     protected static abstract function make(int $id, array $data);
 
     public abstract function getTitle();
 
     public abstract function getDisplayProperties();
+
+    public abstract function getArrayProperties();
 }
