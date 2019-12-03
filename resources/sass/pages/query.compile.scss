@@ -1,16 +1,23 @@
 @import '../layout';
 
-#query-input {
+.overflow-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+#query-input, code {
     border: 0;
     outline-width: 0;
-    margin: 5px 0;
+    display: block;
     padding: 5px;
+    margin: 5px 0;
     width: 100%;
     color: $font-color;
     font-family: 'SF-Mono', monospace;
     font-size: 1em;
     background-color: darken($background-color, 3%);
     background-image: transparent;
+    text-overflow: ellipsis;
 }
 
 #query-output {

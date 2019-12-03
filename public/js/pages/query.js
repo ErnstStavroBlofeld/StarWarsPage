@@ -12786,6 +12786,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('code').each(function (index, element) {
+    var keywordColor = '#eddf91';
+    var colorizedKeywords = ['show', 'select', 'columns', 'from', 'as', 'on', 'inner', 'join', 'on'];
+    var value = element.innerHTML.split(/\s+/).map(function (keyword) {
+      if (colorizedKeywords.includes(keyword)) {
+        return keyword.fontcolor(keywordColor);
+      } else {
+        return keyword;
+      }
+    });
+    element.innerHTML = value.join(' ');
+  });
   axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/query-data').then(function (response) {
     ['films', 'people', 'planets', 'species', 'starships', 'vehicles'].forEach(function (category) {
       alasql__WEBPACK_IMPORTED_MODULE_2___default()("create table ".concat(category));
@@ -12799,13 +12811,20 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
     keydown: function keydown(event) {
       if (event.keyCode == 13) {
         event.preventDefault();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('#query-output').text('');
         var query = event.target.value;
         var result = null;
 
         try {
           result = alasql__WEBPACK_IMPORTED_MODULE_2___default()(query);
         } catch (e) {
-          console.error(e);
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#query-output').text("Error! Check query syntax");
+          return;
+        }
+
+        if (result == null || result.length == 0) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#query-output').text('Query returned 0 results');
+          return;
         }
 
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('#query-output').html(function () {

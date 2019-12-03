@@ -116,17 +116,25 @@ main article .content {
   overflow: hidden;
 }
 
-#query-input {
+.overflow-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+#query-input,
+code {
   border: 0;
   outline-width: 0;
-  margin: 5px 0;
+  display: block;
   padding: 5px;
+  margin: 5px 0;
   width: 100%;
   color: #fff;
   font-family: "SF-Mono", monospace;
   font-size: 1em;
   background-color: #1a1a1a;
   background-image: transparent;
+  text-overflow: ellipsis;
 }
 
 #query-output {
