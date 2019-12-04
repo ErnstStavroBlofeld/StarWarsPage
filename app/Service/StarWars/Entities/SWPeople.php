@@ -2,7 +2,6 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -21,7 +20,24 @@ class SWPeople extends SWEntity
 
     protected static function make(int $id, array $data)
     {
-        $api = resolve(SWApi::class);
+        SWHelper::ValidateData($data, [
+            'name',
+            'height',
+            'mass',
+            'hair_color',
+            'skin_color',
+            'eye_color',
+            'birth_year',
+            'gender',
+            'homeworld',
+            'films',
+            'species',
+            'vehicles',
+            'starships',
+            'created',
+            'edited'
+        ]);
+
         $instance = new SWPeople();
 
         $instance->id        = $id;
@@ -33,11 +49,11 @@ class SWPeople extends SWEntity
         $instance->eyeColor  = $data['eye_color'];
         $instance->birthYear = $data['birth_year'];
         $instance->gender    = $data['gender'];
-        $instance->homeworld = $api->urlObjectId($data['homeworld']);
-        $instance->films     = \array_map([$api, 'urlObjectId'], $data['films']);
-        $instance->species   = \array_map([$api, 'urlObjectId'], $data['species']);
-        $instance->vehicles  = \array_map([$api, 'urlObjectId'], $data['vehicles']);
-        $instance->starships = \array_map([$api, 'urlObjectId'], $data['starships']);
+        $instance->homeworld = SWHelper::ExtractObjectId($data['homeworld']);
+        $instance->films     = SWHelper::ExtractMultipleObjectIds($data['films']);
+        $instance->species   = SWHelper::ExtractMultipleObjectIds($data['species']);
+        $instance->vehicles  = SWHelper::ExtractMultipleObjectIds($data['vehicles']);
+        $instance->starships = SWHelper::ExtractMultipleObjectIds($data['starships']);
         $instance->created   = new DateTime($data['created']);
         $instance->edited    = new DateTime($data['edited']);
 

@@ -10769,6 +10769,17 @@ var updateEntityLinks = function updateEntityLinks() {
 
 /***/ }),
 
+/***/ "./resources/sass/errors/500.compile.scss":
+/*!************************************************!*\
+  !*** ./resources/sass/errors/500.compile.scss ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/pages/entities.compile.scss":
 /*!****************************************************!*\
   !*** ./resources/sass/pages/entities.compile.scss ***!
@@ -10814,14 +10825,15 @@ var updateEntityLinks = function updateEntityLinks() {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/pages/entities.compile.js ./resources/sass/errors/404.compile.scss ./resources/sass/pages/entities.compile.scss ./resources/sass/pages/entity.compile.scss ./resources/sass/pages/home.compile.scss ./resources/sass/pages/query.compile.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/entities.compile.js ./resources/sass/errors/404.compile.scss ./resources/sass/errors/500.compile.scss ./resources/sass/pages/entities.compile.scss ./resources/sass/pages/entity.compile.scss ./resources/sass/pages/home.compile.scss ./resources/sass/pages/query.compile.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/js/pages/entities.compile.js */"./resources/js/pages/entities.compile.js");
 __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/errors/404.compile.scss */"./resources/sass/errors/404.compile.scss");
+__webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/errors/500.compile.scss */"./resources/sass/errors/500.compile.scss");
 __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/pages/entities.compile.scss */"./resources/sass/pages/entities.compile.scss");
 __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/pages/entity.compile.scss */"./resources/sass/pages/entity.compile.scss");
 __webpack_require__(/*! /home/philipp/Dokumenty/Projekty/Web/StarWars/resources/sass/pages/home.compile.scss */"./resources/sass/pages/home.compile.scss");

@@ -2,7 +2,6 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -19,7 +18,24 @@ class SWVehicles extends SWEntity
 
     protected static function make(int $id, array $data)
     {
-        $api = resolve(SWApi::class);
+        SWHelper::ValidateData($data, [
+            'name',
+            'model',
+            'manufacturer',
+            'cost_in_credits',
+            'length',
+            'max_atmosphering_speed',
+            'crew',
+            'passengers',
+            'cargo_capacity',
+            'consumables',
+            'vehicle_class',
+            'pilots',
+            'films',
+            'created',
+            'edited'
+        ]);
+
         $instance = new SWVehicles();
 
         $instance->id                   = $id;
@@ -34,8 +50,8 @@ class SWVehicles extends SWEntity
         $instance->cargoCapacity        = (int) $data['cargo_capacity'];
         $instance->consumables          = $data['consumables'];
         $instance->vehicleClass         = $data['vehicle_class'];
-        $instance->pilots               = \array_map([$api, 'urlObjectId'], $data['pilots']);
-        $instance->films                = \array_map([$api, 'urlObjectId'], $data['films']);
+        $instance->pilots               = SWHelper::ExtractMultipleObjectIds($data['pilots']);
+        $instance->films                = SWHelper::ExtractMultipleObjectIds($data['films']);
         $instance->created              = new DateTime($data['created']);
         $instance->edited               = new DateTime($data['edited']);
 

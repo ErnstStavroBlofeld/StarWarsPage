@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exceptions\ApiResponseException;
 use App\Exceptions\ApiConnectionException;
+use App\Exceptions\MissingFieldException;
 use App\Service\StarWars\Entities\SWFilms;
 use App\Service\StarWars\Entities\SWPeople;
 use App\Service\StarWars\Entities\SWPlanets;
@@ -51,7 +52,7 @@ class StarWarsController extends Controller
         try {
             $find = Closure::fromCallable([$this->dataCategories[$category], 'find']);
             $entity = $find($id);
-        } catch (ApiConnectionException $e) {
+        } catch (MissingFieldException | ApiConnectionException $e) {
             \abort(500);
         } catch (ApiResponseException $e) {
             \abort($e->code == 404 ? 404 : 500);
@@ -71,7 +72,7 @@ class StarWarsController extends Controller
         try {
             $all = Closure::fromCallable([ $this->dataCategories[$category], 'all' ]);
             $entities = $all();
-        } catch (ApiConnectionException $e) {
+        } catch (MissingFieldException | ApiConnectionException $e) {
             \abort(500);
         } catch (ApiResponseException $e) {
             \abort($e->code == 404 ? 404 : 500);

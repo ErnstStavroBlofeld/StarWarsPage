@@ -2,7 +2,6 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -19,7 +18,22 @@ class SWFilms extends SWEntity
 
     protected static function make(int $id, array $data)
     {
-        $api = resolve(SWApi::class);
+        SWHelper::ValidateData($data, [ 
+            'title', 
+            'episode_id', 
+            'opening_crawl', 
+            'director', 
+            'producer', 
+            'release_date', 
+            'characters', 
+            'planets', 
+            'starships', 
+            'vehicles', 
+            'species', 
+            'created', 
+            'edited' 
+        ]);
+        
         $instance = new SWFilms();
 
         $instance->id           = $id;
@@ -29,11 +43,11 @@ class SWFilms extends SWEntity
         $instance->director     = $data['director'];
         $instance->producer     = $data['producer'];
         $instance->releaseDate  = $data['release_date'];
-        $instance->characters   = \array_map([$api, 'urlObjectId'], $data['characters']);
-        $instance->planets      = \array_map([$api, 'urlObjectId'], $data['planets']);
-        $instance->starships    = \array_map([$api, 'urlObjectId'], $data['starships']);
-        $instance->vehicles     = \array_map([$api, 'urlObjectId'], $data['vehicles']);
-        $instance->species      = \array_map([$api, 'urlObjectId'], $data['species']);
+        $instance->characters   = SWHelper::ExtractMultipleObjectIds($data['characters']);
+        $instance->planets      = SWHelper::ExtractMultipleObjectIds($data['planets']);
+        $instance->starships    = SWHelper::ExtractMultipleObjectIds($data['starships']);
+        $instance->vehicles     = SWHelper::ExtractMultipleObjectIds($data['vehicles']);
+        $instance->species      = SWHelper::ExtractMultipleObjectIds($data['species']);
         $instance->created      = new DateTime($data['created']);
         $instance->edited       = new DateTime($data['edited']);
 

@@ -2,7 +2,6 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -19,7 +18,22 @@ class SWPlanets extends SWEntity
 
     protected static function make(int $id, array $data)
     {
-        $api = resolve(SWApi::class);
+        SWHelper::ValidateData($data, [
+            'name',
+            'rotation_period',
+            'orbital_period',
+            'diameter',
+            'climate',
+            'gravity',
+            'terrain',
+            'surface_water',
+            'population',
+            'residents',
+            'films',
+            'created',
+            'edited'
+        ]);
+
         $instance = new SWPlanets();
 
         $instance->id             = $id;
@@ -32,8 +46,8 @@ class SWPlanets extends SWEntity
         $instance->terrain        = $data['terrain'];
         $instance->surfaceWater   = (int) $data['surface_water'];
         $instance->population     = (int) $data['population'];
-        $instance->residents      = \array_map([$api, 'urlObjectId'], $data['residents']);
-        $instance->films          = \array_map([$api, 'urlObjectId'], $data['films']);
+        $instance->residents      = SWHelper::ExtractMultipleObjectIds($data['residents']);
+        $instance->films          = SWHelper::ExtractMultipleObjectIds($data['films']);
         $instance->created        = new DateTime($data['created']);
         $instance->edited         = new DateTime($data['edited']);
 

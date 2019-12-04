@@ -2,7 +2,6 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -19,7 +18,21 @@ class SWSpecies extends SWEntity
 
     protected static function make(int $id, array $data)
     {
-        $api = resolve(SWApi::class);
+        SWHelper::ValidateData($data, [
+            'name',
+            'classification',
+            'designation',
+            'average_height',
+            'skin_colors',
+            'hair_colors',
+            'eye_colors',
+            'average_lifespan',
+            'people',
+            'films',
+            'created',
+            'edited'
+        ]);
+
         $instance = new SWSpecies();
 
         $instance->id              = $id;
@@ -32,8 +45,8 @@ class SWSpecies extends SWEntity
         $instance->eyeColors       = $data['eye_colors'];
         $instance->averageLifespan = $data['average_lifespan'];
         $instance->language        = $data['language'];
-        $instance->people          = \array_map([$api, 'urlObjectId'], $data['people']);
-        $instance->films           = \array_map([$api, 'urlObjectId'], $data['films']);
+        $instance->people          = SWHelper::ExtractMultipleObjectIds($data['people']);
+        $instance->films           = SWHelper::ExtractMultipleObjectIds($data['films']);
         $instance->created         = new DateTime($data['created']);
         $instance->edited          = new DateTime($data['edited']);
 

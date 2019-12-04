@@ -3,6 +3,7 @@
 namespace App\Service\StarWars;
 
 use App\Service\StarWars\SWApi;
+use App\Service\StarWars\SWHelper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use RuntimeException;
@@ -42,7 +43,7 @@ abstract class SWEntity
             
             foreach ($page['results'] as $data) {
                 \array_push($entities, static::make(
-                    $api->urlObjectId($data['url']),
+                    SWHelper::ExtractObjectId($data['url']),
                     $data
                 ));
             }

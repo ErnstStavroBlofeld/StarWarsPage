@@ -1,4 +1,5 @@
 @import '../layout';
+@import 'error';
 
 @keyframes bumps {
     0%, 100% {
@@ -11,9 +12,6 @@
 }
 
 article {
-    text-align: center;
-    font-size: 1.3em;
-
     .file-search {
         padding: 50px 0 100px 0;
 
@@ -26,9 +24,5 @@ article {
             position: absolute;
             animation: bumps 1s infinite ease-in-out;
         }
-    }
-
-    h2 {
-        font-size: 3em;
     }
 }

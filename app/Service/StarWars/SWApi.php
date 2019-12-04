@@ -8,6 +8,7 @@ use App\Exceptions\ApiResponseException;
 use App\Exceptions\ApiConnectionException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Exception;
 
 class SWApi implements Api
 {
@@ -27,11 +28,6 @@ class SWApi implements Api
             'timeout' => 30,
             'exceptions' => false,
         ]);
-    }
-
-    public function urlObjectId(string $url)
-    {
-        return (int) Str::match('/\/(\d+)\/?$/', \parse_url($url, PHP_URL_PATH))[1];
     }
 
     public function get(string $url)
