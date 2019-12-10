@@ -1,0 +1,44 @@
+version: '2'
+services:
+  mysql:
+    image: mariadb
+    restart: always
+    container_name: swdemo_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: gateway
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "33360:3306"
+  php-fpm:
+    build: .
+    restart: always
+    command: ["bash","docker-entrypoint.sh"]
+    container_name: swdemo_php-fpm
+    environment:
+      LARAVEL_ENV: local
+      LARAVEL_ROLE: php-fpm
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-Nginx
+    restart: always
+    container_name: swdemo_nginx
+    ports:
+      - "8800:80"
+    volumes:
+      - ./public:/app/public
+    depends_on:
+      - php-fpm
+volumes:
+  mysql-data:
+    driver: local
+  mongo-data:
+    driver: local
