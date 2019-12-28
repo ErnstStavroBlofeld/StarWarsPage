@@ -8,9 +8,9 @@ class MissingFieldException extends Exception
 {
     public $field;
 
-    public function __construct(string $field, string $message = null)
+    public function __construct(string $field, string $message = null, \Throwable $previous = null)
     {
         $this->field = $field;
-        parent::__construct($message ?? 'Field [' . $field . '] was not present in data');
+        parent::__construct($message ?? 'Field [' . $field . '] was not present in data', $previous);
     }
 }

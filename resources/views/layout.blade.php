@@ -9,26 +9,26 @@
     <title>StarWars - @yield('title')</title>
 </head>
 <body>
-    <main id="app">
-        <header>
-            <h1>StarWars</h1>
-            @if(isset($navigation))
+<main id="app">
+    <header>
+        <h1>StarWars</h1>
+        @if(isset($navigation))
             <nav class="route-buttons">
                 @foreach ($navigation as $route)
-                <a href="{{ url('/' . $route) }}" {{ $route == $location ? 'current' : '' }}>
-                    <img src="{{ url('img/' . $route . '.svg') }}" alt="Icon">
-                    <p>{{ Str::ucfirst($route) }}</p>
-                </a>
+                    <a href="{{ url('/' . $route) }}" {{ $route == $location ? 'current' : '' }}>
+                        <img src="{{ url('img/' . $route . '.svg') }}" alt="Icon">
+                        <p>{{ Str::ucfirst($route) }}</p>
+                    </a>
                 @endforeach
             </nav>
-            @endif
-        </header>
-        <article>
-            <h1>@yield('title')</h1>
-            <div class="content">
-                @yield('content')
-            </div>
-        </article>
-    </main>
+        @endif
+    </header>
+    <article>
+        <h1>@yield('title')</h1>
+        <div class="content">
+            @yield('content')
+        </div>
+    </article>
+</main>
 </body>
 </html>

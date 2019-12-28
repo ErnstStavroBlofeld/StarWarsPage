@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ParseException;
+use App\Exceptions\ValidateException;
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exceptions\ApiResponseException;
 use App\Exceptions\ApiConnectionException;
@@ -18,17 +19,46 @@ use App\Service\StarWars\Entities\SWVehicles;
 class StarWarsController extends Controller
 {
     public $dataCategories = [
-        'people' => SWPeople::class, 
-        'vehicles' => SWVehicles::class, 
-        'planets' => SWPlanets::class, 
-        'starships' => SWStarships::class, 
-        'species' => SWSpecies::class, 
+        'people' => SWPeople::class,
+        'vehicles' => SWVehicles::class,
+        'planets' => SWPlanets::class,
+        'starships' => SWStarships::class,
+        'species' => SWSpecies::class,
         'films' => SWFilms::class
     ];
 
     private function getNavigationButtons()
     {
         return \array_merge(['home', 'query'], \array_keys($this->dataCategories));
+    }
+
+    private function requestDataLoad(string $category, int $id = null)
+    {
+        $loader = Closure::fromCallable([$this->dataCategories[$category], $id == null ? 'all' : 'find']);
+
+        try {
+            return $loader($id);
+        } catch (ApiConnectionException $exception) {
+            abort(500, [
+                'details' => 'External api is not responding'
+            ]);
+        } catch (ApiResponseException $exception) {
+            if ($exception->code == 404) {
+                abort(404, [
+                    'details' => 'Entity not found'
+                ]);
+            } else {
+                abort(500, [
+                    'details' => 'External api returned invalid response'
+                ]);
+            }
+        } catch (MissingFieldException | ParseException | ValidateException $exception) {
+            abort(500, [
+                'details' => 'Data returned is corrupted'
+            ]);
+        }
+
+        return null;
     }
 
     public function homeRequest(Request $request)
@@ -49,59 +79,32 @@ class StarWarsController extends Controller
 
     public function entityRequest(Request $request, string $category, int $id)
     {
-        try {
-            $find = Closure::fromCallable([$this->dataCategories[$category], 'find']);
-            $entity = $find($id);
-        } catch (MissingFieldException | ApiConnectionException $e) {
-            \abort(500);
-        } catch (ApiResponseException $e) {
-            \abort($e->code == 404 ? 404 : 500);
-        }
-
         return view('pages.entity', [
             'navigation' => $this->getNavigationButtons(),
             'location' => $category,
             'category' => $category,
-            'categoryDisplayName' => Str::ucfirst($category),
-            'entity' => $entity
+            'entity' => $this->requestDataLoad($category, $id)
         ]);
     }
 
     public function entitiesRequest(Request $request, string $category)
     {
-        try {
-            $all = Closure::fromCallable([ $this->dataCategories[$category], 'all' ]);
-            $entities = $all();
-        } catch (MissingFieldException | ApiConnectionException $e) {
-            \abort(500);
-        } catch (ApiResponseException $e) {
-            \abort($e->code == 404 ? 404 : 500);
-        }
-
         return view('pages.entities', [
             'navigation' => $this->getNavigationButtons(),
             'location' => $category,
             'category' => $category,
-            'categoryDisplayName' => Str::ucfirst($category),
-            'entities' => $entities
+            'entities' => $this->requestDataLoad($category)
         ]);
     }
 
     public function queryDataRequest(Request $request)
     {
-        try {
-            $allCategories = [];
+        $categoriesCopy = $this->dataCategories;
 
-            foreach ($this->dataCategories as $category => $class) {
-                $all = Closure::fromCallable([ $class, 'all' ]);
-                $allCategories[$category] = \array_map(function ($entity) {
-                    return $entity->getArrayProperties();
-                }, $all());
-            }
-        } catch (\Exception $e) {
-            \abort(500, [ 'error' => 'Internal error', 'code' => 500 ]);
-        }
+        array_walk($categoriesCopy, function (&$value, $category) {
+            $value = $this->requestDataLoad($category);
+        });
 
-        return $allCategories;
+        return $categoriesCopy;
     }
 }

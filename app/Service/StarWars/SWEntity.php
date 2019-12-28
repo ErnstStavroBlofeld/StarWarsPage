@@ -2,61 +2,39 @@
 
 namespace App\Service\StarWars;
 
-use App\Service\StarWars\SWApi;
-use App\Service\StarWars\SWHelper;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use RuntimeException;
+use App\Service\StarWars\Data\SWData;
 
 abstract class SWEntity
 {
-    public static function category()
-    {
-        $category = Str::lower(Arr::last(Str::split('\\', \get_called_class())));
+    public abstract function getApiProperties();
 
-        if (Str::is('sw*', $category)) {
-            $category = Str::substr($category, 2);
-        }
+    public static abstract function category();
 
-        if (!in_array($category, ['people', 'planets', 'films', 'species', 'vehicles', 'starships'])) {
-            throw new RuntimeException('Class [' . \get_called_class() . '] cannot be used as entity category');
-        }
-        
-        return $category;
-    }
+    public static abstract function instantiate(int $id, SWData $data);
 
     public static function find(int $id)
     {
-        return static::make($id, resolve(SWApi::class)->getJson(self::category() . '/' . $id));
+        return static::instantiate($id, new SWData(resolve(SWApi::class)->getJson(static::category() . '/' . $id)));
     }
 
     public static function all()
     {
         $api = resolve(SWApi::class);
-        $category = self::category();
+        $category = static::category();
         $entities = [];
         $page = [];
 
-        do
-        {
+        do {
             $page = $api->getJson($page['next'] ?? ($category . '/'));
-            
+
             foreach ($page['results'] as $data) {
-                \array_push($entities, static::make(
-                    SWHelper::ExtractObjectId($data['url']),
-                    $data
+                array_push($entities, static::instantiate(
+                    SWHelper::getUrlId($data['url']),
+                    new SWData($data)
                 ));
             }
         } while (isset($page['next']) && $page['next'] != null);
 
         return $entities;
     }
-
-    protected static abstract function make(int $id, array $data);
-
-    public abstract function getTitle();
-
-    public abstract function getDisplayProperties();
-
-    public abstract function getArrayProperties();
 }

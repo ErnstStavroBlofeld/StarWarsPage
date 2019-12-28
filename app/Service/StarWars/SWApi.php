@@ -2,18 +2,18 @@
 
 namespace App\Service\StarWars;
 
-use GuzzleHttp\Client;
-use App\Service\Api;
-use App\Exceptions\ApiResponseException;
 use App\Exceptions\ApiConnectionException;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
+use App\Exceptions\ApiResponseException;
+use App\Service\Api;
 use Exception;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class SWApi implements Api
 {
     private $client;
-    
+
     private $apiUrl;
 
     public function __construct()
