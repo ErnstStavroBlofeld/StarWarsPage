@@ -2,7 +2,7 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
+use App\Service\StarWars\Data\SWData;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
@@ -17,67 +17,93 @@ class SWSpecies extends SWEntity
 
     public $created, $edited;
 
-    protected static function make(int $id, array $data)
+    public static function category()
     {
-        $api = resolve(SWApi::class);
+        return 'species';
+    }
+
+    public static function instantiate(int $id, SWData $data)
+    {
         $instance = new SWSpecies();
 
-        $instance->id              = $id;
-        $instance->name            = $data['name'];
-        $instance->classification  = $data['classification'];
-        $instance->designation     = $data['designation'];
-        $instance->averageHeight   = $data['average_height'];
-        $instance->skinColors      = $data['skin_colors'];
-        $instance->hairColors      = $data['hair_colors'];
-        $instance->eyeColors       = $data['eye_colors'];
-        $instance->averageLifespan = $data['average_lifespan'];
-        $instance->language        = $data['language'];
-        $instance->people          = \array_map([$api, 'urlObjectId'], $data['people']);
-        $instance->films           = \array_map([$api, 'urlObjectId'], $data['films']);
-        $instance->created         = new DateTime($data['created']);
-        $instance->edited          = new DateTime($data['edited']);
+        $instance->id = $id;
+
+        $instance->name = $data->field('name')
+            ->notnull()
+            ->get();
+
+        $instance->classification = $data->field('classification')
+            ->notnull()
+            ->get();
+
+        $instance->designation = $data->field('designation')
+            ->notnull()
+            ->get();
+
+        $instance->averageHeight = $data->field('average_height')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->hairColors = $data->field('hair_colors')
+            ->notnull()
+            ->get();
+
+        $instance->skinColors = $data->field('skin_colors')
+            ->notnull()
+            ->get();
+
+        $instance->eyeColors = $data->field('eye_colors')
+            ->notnull()
+            ->get();
+
+        $instance->averageLifespan = $data->field('average_lifespan')
+            ->notnull()
+            ->get();
+
+        $instance->language = $data->field('language')
+            ->notnull()
+            ->get();
+
+        $instance->people = $data->field('people')
+            ->notnull()
+            ->parse(SWHelper::getUrlIdsCallable())
+            ->get();
+
+        $instance->films = $data->field('films')
+            ->notnull()
+            ->parse(SWHelper::getUrlIdsCallable())
+            ->get();
+
+        $instance->created = $data->field('created')
+            ->parse(function ($value) {
+                return new DateTime($value);
+            })->get();
+
+        $instance->edited = $data->field('edited')
+            ->parse(function ($value) {
+                return new DateTime($value);
+            })->get();
 
         return $instance;
     }
 
-    public function getTitle()
-    {
-        return $this->name;
-    }
-
-    public function getDisplayProperties()
+    public function getApiProperties()
     {
         return [
-            'Classification'   => $this->classification,
-            'Designation'      => $this->designation,
-            'Average height'   => $this->averageHeight,
-            'Skin colors'      => $this->skinColors,
-            'Hair colors'      => $this->hairColors,
-            'Eye colors'       => $this->eyeColors,
-            'Average lifespan' => $this->averageLifespan,
-            'People'           => SWHelper::CreateMultipleLinkElements($this->people, 'people'),
-            'Films'            => SWHelper::CreateMultipleLinkElements($this->films, 'films'),
-            'Created'          => $this->created->format('Y-m-d H:i:s'),
-            'Last edited'      => $this->edited->format('Y-m-d H:i:s'),
-        ];
-    }
-
-    public function getArrayProperties()
-    {
-        return [
-            'id'               => $this->id,
-            'name'             => $this->name,
-            'classification'   => $this->classification,
-            'designation'      => $this->designation,
-            'average_height'   => $this->averageHeight,
-            'skin_colors'      => $this->skinColors,
-            'hair_colors'      => $this->hairColors,
-            'Eye_colors'       => $this->eyeColors,
+            'id' => $this->id,
+            'name' => $this->name,
+            'classification' => $this->classification,
+            'designation' => $this->designation,
+            'average_height' => $this->averageHeight,
+            'skin_colors' => $this->skinColors,
+            'hair_colors' => $this->hairColors,
+            'eye_colors' => $this->eyeColors,
             'average_lifespan' => $this->averageLifespan,
-            'people'           => $this->people,
-            'films'            => $this->films, 
-            'created'          => $this->created->format('Y-m-d H:i:s'),
-            'last_edited'      => $this->edited->format('Y-m-d H:i:s'),
+            'people' => $this->people,
+            'films' => $this->films,
+            'created' => $this->created->format('Y-m-d H:i:s'),
+            'last_edited' => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
 }

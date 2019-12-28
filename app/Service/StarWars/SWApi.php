@@ -2,17 +2,18 @@
 
 namespace App\Service\StarWars;
 
-use GuzzleHttp\Client;
-use App\Service\Api;
-use App\Exceptions\ApiResponseException;
 use App\Exceptions\ApiConnectionException;
-use Illuminate\Support\Str;
+use App\Exceptions\ApiResponseException;
+use App\Service\Api;
+use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class SWApi implements Api
 {
     private $client;
-    
+
     private $apiUrl;
 
     public function __construct()
@@ -27,11 +28,6 @@ class SWApi implements Api
             'timeout' => 30,
             'exceptions' => false,
         ]);
-    }
-
-    public function urlObjectId(string $url)
-    {
-        return (int) Str::match('/\/(\d+)\/?$/', \parse_url($url, PHP_URL_PATH))[1];
     }
 
     public function get(string $url)

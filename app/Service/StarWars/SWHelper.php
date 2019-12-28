@@ -2,20 +2,22 @@
 
 namespace App\Service\StarWars;
 
+use App\Helper\FunctionVariables;
+use Illuminate\Support\Str;
+
 class SWHelper
 {
-    public static function CreateLinkElement(int $id, string $category)
+    use FunctionVariables;
+
+    public static function getUrlId(string $url)
     {
-        return view('templates.entity-card-link', [
-            'id' => $id,
-            'category' => $category
-        ]);
+        return (int)Str::match('/\/(\d+)\/?$/', \parse_url($url, PHP_URL_PATH))[1];
     }
 
-    public static function CreateMultipleLinkElements(array $value, string $category)
+    public static function getUrlIds(array $urls)
     {
-        return \implode(' ', \array_map(function (int $id) use ($category) {
-            return self::CreateLinkElement($id, $category);
-        }, $value));
+        return \array_map(function (string $url) {
+            return static::getUrlId($url);
+        }, $urls);
     }
-};
+}

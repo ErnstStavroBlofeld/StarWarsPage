@@ -1,0 +1,36 @@
+@import '../layout';
+@import 'error';
+
+.exposion {
+    margin-top: 50px;
+    height: 350px;
+
+    img {
+        position: absolute;
+        width: 64px;
+        height: 64px;
+    }
+
+    .box {
+        &:nth-child(1) {
+            transform: translate(-80px, 70px) scale(2) rotate(-30deg);
+            z-index: 1;
+        }
+
+        &:nth-child(2) {
+            transform: translate(130px, 100px) scale(4) rotate(10deg);
+            z-index: 3;
+        }
+
+        &:nth-child(3) {
+            transform: translate(30px, 50px) scale(3.2) rotate(-14deg);
+            z-index: 2;
+        }
+    }
+
+    .dynamite {
+        transform: translate(-30px, 100px) scale(4.3) rotate(-20deg);
+        filter: drop-shadow(0px 0px 15px #000);
+        z-index: 4;
+    }
+}

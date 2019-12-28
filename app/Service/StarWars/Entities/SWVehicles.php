@@ -2,14 +2,14 @@
 
 namespace App\Service\StarWars\Entities;
 
-use App\Service\StarWars\SWApi;
+use App\Service\StarWars\Data\SWData;
 use App\Service\StarWars\SWEntity;
 use App\Service\StarWars\SWHelper;
 use DateTime;
 
 class SWVehicles extends SWEntity
 {
-    public $id, $constInCredits, $length, $maxAtmospheringSpeed, $crew, $passengers, $cargoCapacity;
+    public $id, $costInCredits, $length, $maxAtmospheringSpeed, $crew, $passengers, $cargoCapacity;
 
     public $name, $model, $manufacturer, $consumables, $vehicleClass;
 
@@ -17,75 +17,110 @@ class SWVehicles extends SWEntity
 
     public $created, $edited;
 
-    protected static function make(int $id, array $data)
+    public static function category()
     {
-        $api = resolve(SWApi::class);
+        return 'vehicles';
+    }
+
+    public static function instantiate(int $id, SWData $data)
+    {
         $instance = new SWVehicles();
 
-        $instance->id                   = $id;
-        $instance->name                 = $data['name'];
-        $instance->model                = $data['model'];
-        $instance->manufacturer         = $data['manufacturer'];
-        $instance->constInCredits       = (int) $data['cost_in_credits'];
-        $instance->length               = (float) $data['length'];
-        $instance->maxAtmospheringSpeed = (int) $data['max_atmosphering_speed'];
-        $instance->crew                 = (int) $data['crew'];
-        $instance->passengers           = (int) $data['passengers'];
-        $instance->cargoCapacity        = (int) $data['cargo_capacity'];
-        $instance->consumables          = $data['consumables'];
-        $instance->vehicleClass         = $data['vehicle_class'];
-        $instance->pilots               = \array_map([$api, 'urlObjectId'], $data['pilots']);
-        $instance->films                = \array_map([$api, 'urlObjectId'], $data['films']);
-        $instance->created              = new DateTime($data['created']);
-        $instance->edited               = new DateTime($data['edited']);
+        $instance->id = $id;
+
+        $instance->name = $data->field('name')
+            ->notnull()
+            ->get();
+
+        $instance->model = $data->field('model')
+            ->notnull()
+            ->get();
+
+        $instance->manufacturer = $data->field('manufacturer')
+            ->notnull()
+            ->get();
+
+        $instance->costInCredits = $data->field('cost_in_credits')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->length = $data->field('length')
+            ->notnull()
+            ->float()
+            ->get();
+
+        $instance->maxAtmospheringSpeed = $data->field('max_atmosphering_speed')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->crew = $data->field('crew')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->passengers = $data->field('passengers')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->cargoCapacity = $data->field('cargo_capacity')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->consumables = $data->field('consumables')
+            ->notnull()
+            ->int()
+            ->get();
+
+        $instance->vehicleClass = $data->field('vehicle_class')
+            ->notnull()
+            ->get();
+
+        $instance->pilots = $data->field('pilots')
+            ->notnull()
+            ->parse(SWHelper::getUrlIdsCallable())
+            ->get();
+
+        $instance->films = $data->field('films')
+            ->notnull()
+            ->parse(SWHelper::getUrlIdsCallable())
+            ->get();
+
+        $instance->created = $data->field('created')
+            ->parse(function ($value) {
+                return new DateTime($value);
+            })->get();
+
+        $instance->edited = $data->field('edited')
+            ->parse(function ($value) {
+                return new DateTime($value);
+            })->get();
 
         return $instance;
     }
 
-    public function getTitle()
-    {
-        return $this->name;
-    }
-
-    public function getDisplayProperties()
+    public function getApiProperties()
     {
         return [
-            'Model'                      => $this->model,
-            'Manufacturer'               => $this->manufacturer,
-            'Cost (in credits)'          => $this->constInCredits,
-            'Length'                     => $this->length,
-            'Maximum atmosphering speed' => $this->maxAtmospheringSpeed,
-            'Crew'                       => $this->crew,
-            'Passengers'                 => $this->passengers,
-            'Cargo capacity'             => $this->cargoCapacity,
-            'Consumables'                => $this->consumables,
-            'Class'                      => $this->vehicleClass,
-            'Pilots'                     => SWHelper::CreateMultipleLinkElements($this->pilots, 'people'),
-            'Films'                      => SWHelper::CreateMultipleLinkElements($this->films, 'films'),
-            'Created'                    => $this->created->format('Y-m-d H:i:s'),
-            'Last edited'                => $this->edited->format('Y-m-d H:i:s'),
-        ];
-    }
-
-    public function getArrayProperties()
-    {
-        return [
-            'id'                         => $this->id,
-            'name'                       => $this->name,
-            'model'                      => $this->model,
-            'manufacturer'               => $this->manufacturer,
-            'cost_in_credits'            => $this->constInCredits,
-            'length'                     => $this->length,
+            'id' => $this->id,
+            'name' => $this->name,
+            'model' => $this->model,
+            'manufacturer' => $this->manufacturer,
+            'cost_in_credits' => $this->costInCredits,
+            'length' => $this->length,
             'maximum_atmosphering_speed' => $this->maxAtmospheringSpeed,
-            'crew'                       => $this->crew,
-            'passengers'                 => $this->passengers,
-            'cargo_capacity'             => $this->cargoCapacity,
-            'consumables'                => $this->consumables,
-            'class'                      => $this->vehicleClass,
-            'pilots'                     => $this->pilots,
-            'films'                      => $this->films,
-            'created'                    => $this->created->format('Y-m-d H:i:s'),
-            'last_edited'                => $this->edited->format('Y-m-d H:i:s'),
+            'crew' => $this->crew,
+            'passengers' => $this->passengers,
+            'cargo_capacity' => $this->cargoCapacity,
+            'consumables' => $this->consumables,
+            'class' => $this->vehicleClass,
+            'pilots' => $this->pilots,
+            'films' => $this->films,
+            'created' => $this->created->format('Y-m-d H:i:s'),
+            'last_edited' => $this->edited->format('Y-m-d H:i:s'),
         ];
     }
 }

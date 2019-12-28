@@ -1,17 +1,12 @@
 @extends('../layout')
 
-@section('title', $categoryDisplayName)
+@section('title', Str::ucfirst($category))
 
 @section('head')
-<link rel="stylesheet" href="{{ url('css/pages/entity.css') }}">
-<script src="{{ url('js/pages/entity.js') }}"></script>
+    <link rel="stylesheet" href="{{ url('css/pages/entity.css') }}">
+    <script src="{{ url('js/pages/entity.js') }}"></script>
 @endsection
 
 @section('content')
-@include('templates.entity-card', [ 
-    'entity' => $entity, 
-    'link' => false, 
-    'category' => $category,
-    'id' => $entity->id
-])
+    @include('templates.entities.' . $category, ['instance' => $entity])
 @endsection
