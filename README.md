@@ -28,3 +28,7 @@ Page based on swapi.co
     - moved from loop based rendering to category based
     - removed search option
     - improved error handling
+    
+## Preview:
+
+![](preview.png)
